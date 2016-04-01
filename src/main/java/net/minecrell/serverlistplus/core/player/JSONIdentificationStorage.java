@@ -147,7 +147,7 @@ public class JSONIdentificationStorage extends AbstractIdentificationStorage {
         try {
             if (Files.notExists(storagePath)) {
                 // Actually this should have been already created by the configuration manager...
-                Files.createDirectories(storagePath.getParent());
+                Files.createDirectories(storagePath.toAbsolutePath().getParent());
             }
 
             try (BufferedWriter writer = IOHelper.newBufferedWriter(storagePath)) {
@@ -166,10 +166,10 @@ public class JSONIdentificationStorage extends AbstractIdentificationStorage {
     public void disable() throws ServerListPlusException {
         if (saveTask != null) {
             saveTask.cancel();
-            this.saveTask = null;
         }
 
         save();
+        this.saveTask = null;
     }
 
     // TODO: Java 8

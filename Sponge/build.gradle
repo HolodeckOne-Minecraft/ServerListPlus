@@ -21,14 +21,8 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-repositories {
-    maven {
-        name = 'sponge'
-        url = 'https://repo.spongepowered.org/maven'
-    }
+plugins {
+    id 'org.spongepowered.plugin' version '0.5.1'
 }
 
 ext {
@@ -39,11 +33,15 @@ ext {
     resourceTokens.PluginClass = pluginClass.toString()
 }
 
-dependencies {
-    compile 'org.spongepowered:spongeapi:3.0.0'
-    compile 'net.minecrell.mcstats:statslite-sponge:0.2.1'
+sponge {
+    plugin.id = 'net.minecrell.serverlistplus'
+}
 
-    compile 'net.minecrell:statusprotocol:0.1'
+dependencies {
+    compile 'org.spongepowered:spongeapi:4.0.3'
+    compile 'net.minecrell.mcstats:statslite-sponge:0.2.2'
+
+    compile 'net.minecrell:statusprotocol:0.2'
 }
 
 shadowJar {
@@ -51,5 +49,5 @@ shadowJar {
         include dependency('net.minecrell.mcstats:statslite-sponge')
     }
 
-    relocate 'net.minecrell.statslite', 'net.minecrell.serverlistplus.statslite'
+    relocate 'net.minecrell.mcstats', 'net.minecrell.serverlistplus.mcstats'
 }

@@ -126,7 +126,11 @@ public class BukkitPlugin extends BukkitPluginBase implements ServerListPlusPlug
 
         this.bukkit = new BukkitEventHandler(this);
         if (Environment.checkProtocolLib(getServer())) {
-            this.protocol = new ProtocolLibHandler(this);
+            try {
+                this.protocol = new ProtocolLibHandler(this);
+            } catch (Throwable e) {
+                getLogger().log(ERROR, "Failed to construct ProtocolLib handler. Is your ProtocolLib version up-to-date?", e);
+            }
         } else getLogger().log(ERROR, "ProtocolLib IS NOT INSTALLED! Most features will NOT work!");
 
         try { // Load the core first
@@ -384,7 +388,7 @@ public class BukkitPlugin extends BukkitPluginBase implements ServerListPlusPlug
     }
 
     @Override
-    public void configChanged(InstanceStorage<Object> confs) {
+    public void configChanged(ServerListPlusCore core, InstanceStorage<Object> confs) {
         // Player tracking
         if (confs.get(PluginConf.class).PlayerTracking.Enabled) {
             if (loginListener == null) {

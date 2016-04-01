@@ -22,12 +22,13 @@
  */
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 allprojects {
     group = 'net.minecrell'
-    version = '3.4.2'
+    description = 'An extremely customizable server status ping plugin for Minecraft'
+    version = '3.4.5-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
@@ -79,7 +80,7 @@ allprojects {
 
 ext {
     // Placeholders for configuration filtering
-    description = 'An extremely customizable server status ping plugin for Minecraft'
+    description = rootProject.description
     author = 'Minecrell <https://github.com/Minecrell>'
 
     javaPackage = 'net.minecrell.serverlistplus'
@@ -101,6 +102,7 @@ dependencies {
     compile 'com.google.guava:guava:17.0'
     compile 'org.yaml:snakeyaml:1.15'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 }
 
 processResources {
@@ -131,7 +133,11 @@ subprojects {
 
         dependencies {
             include project(rootProject.path)
+            include dependency('org.ocpsoft.prettytime:prettytime')
         }
+
+        exclude 'META-INF/services/**'
+        relocate 'org.ocpsoft.prettytime', 'net.minecrell.serverlistplus.core.lib.prettytime'
     }
 
     artifacts {
@@ -193,4 +199,8 @@ publishing {
             }
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
 }
