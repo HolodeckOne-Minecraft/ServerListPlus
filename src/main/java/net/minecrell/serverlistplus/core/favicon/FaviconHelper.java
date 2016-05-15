@@ -83,8 +83,8 @@ public final class FaviconHelper {
 
     private static final String SKIN_URL = "http://skins.minecraft.net/MinecraftSkins/%s.png";
     private static final String SKIN_UUID_URL = "https://sessionserver.mojang.com/session/minecraft/profile/";
-    private static final String STEVE_URL = "https://minecraft.net/images/steve.png";
-    private static final String ALEX_URL = "https://minecraft.net/images/alex.png";
+    private static final String STEVE_URL = "http://assets.mojang.com/SkinTemplates/steve.png";
+    private static final String ALEX_URL = "http://assets.mojang.com/SkinTemplates/alex.png";
 
     private static final int HEAD_X = 8, HEAD_Y = 8;
     private static final int HELM_X = 40, HELM_Y = 8;
@@ -92,7 +92,7 @@ public final class FaviconHelper {
 
     private static BufferedImage fromSkin(ServerListPlusCore core, URL url, boolean helm) throws IOException {
         BufferedImage skin = fromURL(core, url);
-        if (helm) {
+        if (helm && !isSolidColor(skin, HELM_X, HELM_Y, HEAD_SIZE, HEAD_SIZE)) {
             Graphics2D g = skin.createGraphics();
             g.copyArea(HELM_X, HELM_Y, HEAD_SIZE, HEAD_SIZE, HEAD_X - HELM_X, HEAD_Y - HELM_Y);
             g.dispose();
@@ -168,4 +168,17 @@ public final class FaviconHelper {
             return null;
         }
     }
+
+    private static boolean isSolidColor(BufferedImage image, int x, int y, int width, int height) {
+        int base = image.getRGB(x, y);
+        for (; x < width; x++) {
+            for (; y < height; y++) {
+                if (base != image.getRGB(x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
