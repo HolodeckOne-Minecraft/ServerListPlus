@@ -28,7 +28,7 @@ plugins {
 allprojects {
     group = 'net.minecrell'
     description = 'An extremely customizable server status ping plugin for Minecraft'
-    version = '3.4.6-SNAPSHOT'
+    version = '3.4.8-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
@@ -51,7 +51,7 @@ allprojects {
     }
 
     dependencies {
-        provided 'org.projectlombok:lombok:1.16.8'
+        provided 'org.projectlombok:lombok:1.16.10'
     }
 
     tasks.withType(JavaCompile) {
@@ -202,5 +202,5 @@ publishing {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '2.14'
 }

@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import net.minecrell.serverlistplus.core.status.StatusRequest;
 import net.minecrell.serverlistplus.server.ServerListPlusServer;
 import net.minecrell.serverlistplus.server.network.protocol.ProtocolState;
 import net.minecrell.serverlistplus.server.network.protocol.packet.ClientPacket;
@@ -25,11 +26,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements Packe
     private StatusClient client = new StatusClient();
 
     public static ProtocolState getState(ChannelHandlerContext ctx) {
-        return ctx.attr(PROTOCOL_STATE).get();
+        return ctx.channel().attr(PROTOCOL_STATE).get();
     }
 
     public static void setState(ChannelHandlerContext ctx, ProtocolState state) {
-        ctx.attr(PROTOCOL_STATE).set(state);
+        ctx.channel().attr(PROTOCOL_STATE).set(state);
     }
 
     private void checkState(ChannelHandlerContext ctx, ProtocolState state) {
@@ -45,7 +46,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements Packe
     public void handle(ChannelHandlerContext ctx, PacketHandshake packet) {
         checkState(ctx, ProtocolState.HANDSHAKE);
         this.client.setProtocol(packet.getProtocolVersion());
-        this.client.setVirtualHost(InetSocketAddress.createUnresolved(packet.getIp(), packet.getPort()));
+        this.client.setVirtualHost(InetSocketAddress.createUnresolved(StatusRequest.cleanVirtualHost(packet.getHost()), packet.getPort()));
         setState(ctx, packet.getNextState());
     }
 
