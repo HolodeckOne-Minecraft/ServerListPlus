@@ -94,7 +94,7 @@ ext {
     ];
 
     universalProjects = [
-            ':Bukkit', ':Bungee', ':Canary', ':Sponge'
+            ':Bukkit', ':Bungee', ':Sponge'
     ]
 }
 

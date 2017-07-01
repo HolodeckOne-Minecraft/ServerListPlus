@@ -22,22 +22,23 @@
  */
 
 repositories {
+    mavenLocal()
     maven {
         name = 'spigot'
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
     }
     maven {
         name = 'dmulloy2'
-        url = 'http://repo.dmulloy2.net/content/repositories/releases'
+        url = 'http://repo.dmulloy2.net/content/repositories/public'
     }
     maven {
         name = 'dmulloy2-snapshots'
         url = 'http://repo.dmulloy2.net/content/repositories/snapshots'
     }
-    maven {
-        name = 'mcstats-snapshots'
-        url = 'http://repo.mcstats.org/content/repositories/snapshots'
-    }
+    //maven {
+    //    name = 'mcstats-snapshots'
+    //    url = 'http://repo.mcstats.org/content/repositories/snapshots'
+    //}
 }
 
 ext {
@@ -50,7 +51,7 @@ ext {
 
 dependencies {
     compile 'org.bukkit:bukkit:1.10.2-R0.1-SNAPSHOT'
-    compile 'com.comphenix.protocol:ProtocolLib:4.1.0'
+    compile 'com.comphenix.protocol:ProtocolLib:4.3.1-SNAPSHOT'
     compile('org.mcstats.bukkit:metrics-lite:R8-SNAPSHOT') {
         transitive = false
     }
